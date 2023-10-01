@@ -23,7 +23,7 @@ result_label.grid(column=1, row=2, sticky="w")
 def get_sum():
     a = int(first_entry.get())
     b = int(second_entry.get())
-    c = a + b
+    c = a * b
     
     result_label['text'] = c
 
