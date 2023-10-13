@@ -3,6 +3,7 @@
 import tkinter as tk
 from tkinter import messagebox as mb
 from tkinter import filedialog as fd
+import os
 
 # Создание главного окна
 window = tk.Tk()
@@ -36,7 +37,8 @@ label_31.grid(row=3, column=1, sticky="w")
 
 # Диалог открытия файла
 def do_dialog():
-    name=fd.askopenfilename()
+    my_dir = os.getcwd()
+    name=fd.askopenfilename(initialdir=my_dir)
     return name
     
 # Обработчик нажатия кнопки
