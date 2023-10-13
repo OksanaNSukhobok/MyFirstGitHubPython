@@ -32,5 +32,9 @@ label_30.grid(row=3, column=0, padx=10, pady=5, sticky="e")
 label_31 = tk.Label(text = "")
 label_31.grid(row=3, column=1, sticky="w")
 
+# Создание кнопки
+button = tk.Button(window, text="Прочитать файл")
+button.grid(row=4, column=1)
+
 # Запуск цикла mainloop
 window.mainloop()
