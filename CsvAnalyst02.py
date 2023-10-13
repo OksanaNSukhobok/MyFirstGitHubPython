@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter import messagebox as mb
+from tkinter import filedialog as fd
 
 # Создание главного окна
 window = tk.Tk()
@@ -33,8 +34,14 @@ label_30.grid(row=3, column=0, padx=10, pady=5, sticky="e")
 label_31 = tk.Label(text = "")
 label_31.grid(row=3, column=1, sticky="w")
 
+# Диалог открытия файла
+def do_dialog():
+    name=fd.askopenfilename()
+    return name
+    
 # Обработчик нажатия кнопки
 def process_button():
+    do_dialog()
     mb.showinfo(title=None, message = "Готово")
 
 # Создание кнопки
