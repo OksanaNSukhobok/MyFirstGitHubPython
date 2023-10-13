@@ -51,12 +51,20 @@ def pandas_read_csv(file_name):
     label_21['text'] = cnt_columns
     label_31['text'] = cnt_rows
     return df
+    
+# Выборка столбца в список
+def get_list_column(df, column_ix):
+    cnt_rows = df.shape[0]
+    lst = []
+    for i in range(cnt_rows):
+        lst.append(df.iat[i, column_ix])
+    return lst
 
 # Обработчик нажатия кнопки
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
-    pandas_read_csv(file_name)
+    df = pandas_read_csv(file_name)
     mb.showinfo(title=None, message = "Готово")
 
 # Создание кнопки
