@@ -42,6 +42,31 @@ def do_dialog():
     name=fd.askopenfilename(initialdir=my_dir)
     return name
 
+# Выборка столбца в список
+def get_list_column(df, column_ix):
+    cnt_rows = df.shape[0]
+    lst = []
+    for i in range(cnt_rows):
+        lst.append(df.iat[i, column_ix])
+    return lst
+
+# Подсчет количества emails в столбце
+def count_email(df):
+    cnt_columns = df.shape[1]
+    mas = []
+    for i in range(cnt_columns):
+        try:
+            lst = get_list_column(df, i)
+            a=0
+            for item in lst:
+                if '@' in item:
+                    a += 1
+        except:
+            continue
+        finally:
+            mas.append(a)
+    return mas
+
 # Обработка csv файла при помощи pandas
 def pandas_read_csv(file_name):
     df = pd.read_csv(file_name, header=None, sep=';')
@@ -52,13 +77,6 @@ def pandas_read_csv(file_name):
     label_31['text'] = cnt_rows
     return df
     
-# Выборка столбца в список
-def get_list_column(df, column_ix):
-    cnt_rows = df.shape[0]
-    lst = []
-    for i in range(cnt_rows):
-        lst.append(df.iat[i, column_ix])
-    return lst
 
 # Обработчик нажатия кнопки
 def process_button():
