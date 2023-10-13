@@ -79,21 +79,20 @@ def get_max_column(df):
 
 # Обработка csv файла при помощи pandas
 def pandas_read_csv(file_name):
-    df = pd.read_csv(file_name, header=None, sep=';')
-    cnt_rows = df.shape[0]
-    cnt_columns = df.shape[1]
-    label_11['text'] = 'Emails'
-    label_21['text'] = cnt_columns
-    label_31['text'] = cnt_rows
+    with open(file_name, 'rb') as f:
+        result = chardet.detect(f.read())
+        if 'utf' in result['encoding'] :
+            df = pd.read_csv(file_name, header=None, sep=';', encoding='utf-8')
+        else:
+            df = pd.read_csv(file_name, header=None, sep=';', encoding='cp1251')
     return df
-    
 
 # Обработчик нажатия кнопки
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
     df = pandas_read_csv(file_name)
-    mb.showinfo(title=None, message = "Готово")
+    mb.showinfo(title=file_name, message = "Готово")
 
 # Создание кнопки
 button = tk.Button(window, text="Прочитать файл", command=process_button)
