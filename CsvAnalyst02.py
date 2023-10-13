@@ -5,6 +5,7 @@ from tkinter import messagebox as mb
 from tkinter import filedialog as fd
 import os
 import pandas as pd
+import chardet
 
 # Создание главного окна
 window = tk.Tk()
@@ -87,11 +88,25 @@ def pandas_read_csv(file_name):
             df = pd.read_csv(file_name, header=None, sep=';', encoding='cp1251')
     return df
 
+# Вывод результата по emails в итоговое окно
+def get_result_emails(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_11['text'] = 'Emails'
+        label_21['text'] = index
+        label_31['text'] = max_number        
+    except:
+        label_11['text'] = 'Emails'
+        label_21['text'] = 'нет данных'
+        label_31['text'] = 'нет данных'
+    return df
+
 # Обработчик нажатия кнопки
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
-    df = pandas_read_csv(file_name)
+    get_result_emails(file_name)
     mb.showinfo(title=file_name, message = "Готово")
 
 # Создание кнопки
