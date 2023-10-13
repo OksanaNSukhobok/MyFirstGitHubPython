@@ -1,6 +1,7 @@
 # Программа анализа .csv файлов
 
 import tkinter as tk
+from tkinter import messagebox as mb
 
 # Создание главного окна
 window = tk.Tk()
@@ -32,8 +33,12 @@ label_30.grid(row=3, column=0, padx=10, pady=5, sticky="e")
 label_31 = tk.Label(text = "")
 label_31.grid(row=3, column=1, sticky="w")
 
+# Обработчик нажатия кнопки
+def process_button():
+    mb.showinfo(title=None, message = "Готово")
+
 # Создание кнопки
-button = tk.Button(window, text="Прочитать файл")
+button = tk.Button(window, text="Прочитать файл", command=process_button)
 button.grid(row=4, column=1)
 
 # Запуск цикла mainloop
