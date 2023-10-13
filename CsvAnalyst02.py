@@ -67,6 +67,16 @@ def count_email(df):
             mas.append(a)
     return mas
 
+# Определение столбца с максимальным числом emails
+def get_max_column(df):
+    numbers = count_email(df)
+    max_number = numbers[0]
+    for item in numbers:
+        if item > max_number:
+            max_number = item
+            index = numbers.index(max_number)+1
+    return index, max_number
+
 # Обработка csv файла при помощи pandas
 def pandas_read_csv(file_name):
     df = pd.read_csv(file_name, header=None, sep=';')
