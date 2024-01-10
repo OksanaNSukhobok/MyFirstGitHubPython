@@ -198,7 +198,7 @@ def get_max_column(df):
             max_number = item
             index = numbers.index(max_number)+1
     return index, max_number
-    
+
 # Поиск столбцов с номерами телефонов по заданным шаблонам
 def find_tel_number_column(df):
     cnt_columns = df.shape[1]
@@ -217,13 +217,31 @@ def find_tel_number_column(df):
                 a += 1
         arr.append(a)
     return arr
-    
+
 file_name = do_dialog()
 df = pandas_read_csv(file_name)
 arr = find_tel_number_column(df)
 print(arr)
 
+# Подсчет количества телефонов в найденных столбцах
+def count_tel_number(df):
+    numbers = find_tel_number_column(df)
+    arr1 = []
+    b=0
+    for index, item in enumerate(numbers):
+        if item <= 1: 
+            b = 0
+        else:
+            lst = get_list_column(df, index)
+            mySeries = pd.Series(lst)
+            data = mySeries.value_counts()
+            b = len(data)
+        arr1.append(b)
+    return arr1
 
+arr1 = count_tel_number(df)
+print(arr1)
+print(type(arr1))
 
 # Вывод результата по email
 def get_result_email(file_name):
