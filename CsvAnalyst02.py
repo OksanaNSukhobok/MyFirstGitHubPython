@@ -4,8 +4,10 @@ import tkinter as tk
 from tkinter import messagebox as mb
 from tkinter import filedialog as fd
 import os
+import numpy as np
 import pandas as pd
 import chardet
+import re
 
 # Создание главного окна
 window = tk.Tk()
@@ -150,6 +152,17 @@ def do_dialog():
     my_dir = os.getcwd()
     name=fd.askopenfilename(initialdir=my_dir)
     return name
+    
+# Обработка csv файла при помощи pandas
+def pandas_read_csv(file_name):
+    with open(file_name, 'rb') as f:
+        result = chardet.detect(f.read())
+        if 'utf' in result['encoding'] :
+            encoding = 'utf-8'
+        else:
+            encoding = 'Windows-1251'
+        df = pd.read_csv(file_name, header=0, sep=';', encoding=encoding, dtype=str)
+    return df
 
 # Выборка столбца в список
 def get_list_column(df, column_ix):
@@ -185,16 +198,32 @@ def get_max_column(df):
             max_number = item
             index = numbers.index(max_number)+1
     return index, max_number
+    
+# Поиск столбцов с номерами телефонов по заданным шаблонам
+def find_tel_number_column(df):
+    cnt_columns = df.shape[1]
+    arr = []
+    for i in range(cnt_columns):
+        lst = get_list_column(df, i)
+        a = 0
+        for item in lst:
+            if isinstance(item, float) and np.isnan(item):
+                continue
+            elif re.findall(r'[(]\d{3}[)]\d{3}[-]\d{4}', item):
+                a += 1
+            elif re.findall(r'\d{3}[-]\d{4}', item):
+                a += 1
+            elif re.findall(r'(\d){11}', item):
+                a += 1
+        arr.append(a)
+    return arr
+    
+file_name = do_dialog()
+df = pandas_read_csv(file_name)
+arr = find_tel_number_column(df)
+print(arr)
 
-# Обработка csv файла при помощи pandas
-def pandas_read_csv(file_name):
-    with open(file_name, 'rb') as f:
-        result = chardet.detect(f.read())
-        if 'utf' in result['encoding'] :
-            df = pd.read_csv(file_name, header=None, sep=';', encoding='utf-8')
-        else:
-            df = pd.read_csv(file_name, header=None, sep=';', encoding='cp1251')
-    return df
+
 
 # Вывод результата по email
 def get_result_email(file_name):
@@ -212,7 +241,7 @@ def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
     get_result_email(file_name)
-    #fill_telephone_label(file_name)
+    fill_telephone_label(file_name)
     #get_result_firstname(file_name)
     #get_result_lastname(file_name)
     #get_result_secondname(file_name)
