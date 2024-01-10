@@ -243,6 +243,25 @@ arr1 = count_tel_number(df)
 print(arr1)
 print(type(arr1))
 
+# Определение результата по telephone
+def get_result_telephone(df):
+    arr1 = count_tel_number(df)
+    arr2 = []
+    arr3 = []
+    for index, item in enumerate(arr1):
+        if item <= 0:
+            continue
+        else:
+            a = index+1
+            arr2.append(a)
+            b = item
+            arr3.append(b)
+    return arr2, arr3
+
+result = get_result_telephone(df)
+print(result)
+print(type(result))
+
 # Вывод результата по email
 def get_result_email(file_name):
     df = pandas_read_csv(file_name)
