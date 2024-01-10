@@ -162,19 +162,19 @@ def get_list_column(df, column_ix):
 # Подсчет количества emails в столбце
 def count_email(df):
     cnt_columns = df.shape[1]
-    mas = []
+    arr = []
     for i in range(cnt_columns):
         try:
             lst = get_list_column(df, i)
-            a=0
+            a = 0
             for item in lst:
                 if '@' in item:
                     a += 1
         except:
             continue
         finally:
-            mas.append(a)
-    return mas
+            arr.append(a)
+    return arr
 
 # Определение столбца с максимальным числом emails
 def get_max_column(df):
@@ -196,25 +196,29 @@ def pandas_read_csv(file_name):
             df = pd.read_csv(file_name, header=None, sep=';', encoding='cp1251')
     return df
 
-# Вывод результата по emails в итоговое окно
-def get_result_emails(file_name):
+# Вывод результата по email
+def get_result_email(file_name):
     df = pandas_read_csv(file_name)
     try:
         index, max_number = get_max_column(df)
-        label_11['text'] = 'Emails'
         label_21['text'] = index
         label_31['text'] = max_number        
     except:
-        label_11['text'] = 'Emails'
         label_21['text'] = 'нет данных'
         label_31['text'] = 'нет данных'
-    return df
 
 # Обработчик нажатия кнопки
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
-    get_result_emails(file_name)
+    get_result_email(file_name)
+    #fill_telephone_label(file_name)
+    #get_result_firstname(file_name)
+    #get_result_lastname(file_name)
+    #get_result_secondname(file_name)
+    #get_result_address(file_name)
+    #get_result_link(file_name)
+    #get_result_gender(file_name)
     mb.showinfo(title=file_name, message = "Готово")
 
 # Создание кнопки
