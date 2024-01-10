@@ -9,33 +9,141 @@ import chardet
 
 # Создание главного окна
 window = tk.Tk()
-window.geometry("600x300")
+window.geometry("900x690")
 window.title("Программа анализа .csv файлов")
 
 # Создание меток вывода
-label_00 = tk.Label(text = "Файл: ")
-label_00.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+label_00 = tk.Label(window, text = "Файл: ", font = ('Helvetica', 10, 'bold'), fg = '#0000CC')
+label_00.place(x=40, y=25)
 
-label_01 = tk.Label(text = "")
-label_01.grid(row=0, column=1, sticky="w")
+label_01 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#0000CC')
+label_01.place(x=105, y=25)
 
-label_10 = tk.Label(text = "Заголовок")
-label_10.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+label_11 = tk.Label(window, text = "Email", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_11.place(x=220, y=50)
 
-label_11 = tk.Label(text = "")
-label_11.grid(row=1, column=1, sticky="w")
+label_20 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_20.place(x=40, y=70)
 
-label_20 = tk.Label(text = "Номер столбца: ")
-label_20.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+label_21 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_21.place(x=220, y=70)
 
-label_21 = tk.Label(text = "")
-label_21.grid(row=2, column=1, sticky="w")
+label_30 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_30.place(x=40, y=95)
 
-label_30 = tk.Label(text = "Количество значений: ")
-label_30.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+label_31 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_31.place(x=220, y=95)
 
-label_31 = tk.Label(text = "")
-label_31.grid(row=3, column=1, sticky="w")
+label_41 = tk.Label(window, text = "Телефон", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_41.place(x=220, y=130)
+
+label_50 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_50.place(x=40, y=150)
+
+label_51 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_51.place(x=220, y=150)
+
+label_52 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_52.place(x=320, y=150)
+
+label_60 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_60.place(x=40, y=175)
+
+label_61 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_61.place(x=220, y=175)
+
+label_62 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_62.place(x=320, y=175)
+
+label_71 = tk.Label(window, text = "Имя", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_71.place(x=220, y=210)
+
+label_80 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_80.place(x=40, y=230)
+
+label_81 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_81.place(x=220, y=230)
+
+label_90 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_90.place(x=40, y=255)
+
+label_91 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_91.place(x=220, y=255)
+
+label_101 = tk.Label(window, text = "Фамилия", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_101.place(x=220, y=290)
+
+label_110 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_110.place(x=40, y=310)
+
+label_111 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_111.place(x=220, y=310)
+
+label_120 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_120.place(x=40, y=335)
+
+label_121 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_121.place(x=220, y=335)
+
+label_131 = tk.Label(window, text = "Отчество", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_131.place(x=220, y=370)
+
+label_140 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_140.place(x=40, y=390)
+
+label_141 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_141.place(x=220, y=390)
+
+label_150 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_150.place(x=40, y=415)
+
+label_151 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_151.place(x=220, y=415)
+
+label_161 = tk.Label(window, text = "Адрес", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_161.place(x=220, y=450)
+
+label_170 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_170.place(x=40, y=470)
+
+label_171 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_171.place(x=220, y=470)
+
+label_180 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_180.place(x=40, y=495)
+
+label_181 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_181.place(x=220, y=495)
+
+label_191 = tk.Label(window, text = "Ссылка", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_191.place(x=220, y=530)
+
+label_200 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_200.place(x=40, y=550)
+
+label_201 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_201.place(x=220, y=550)
+
+label_210 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_210.place(x=40, y=575)
+
+label_211 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_211.place(x=220, y=575)
+
+label_221 = tk.Label(window, text = "Пол", font = ('Helvetica', 10, 'bold'), fg = '#008800')
+label_221.place(x=220, y=610)
+
+label_230 = tk.Label(window, text = "Номер столбца", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_230.place(x=40, y=630)
+
+label_231 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_231.place(x=220, y=630)
+
+label_240 = tk.Label(window, text = "Количество значений", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_240.place(x=40, y=655)
+
+label_241 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
+label_241.place(x=220, y=655)
 
 # Диалог открытия файла
 def do_dialog():
