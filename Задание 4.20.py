@@ -307,7 +307,20 @@ def count_firstname(df):
         arfn1.append(b)
     return arfn1
 
-
+# Определение результата по firstname
+def get_result_firstname(df):
+    arfn1 = count_firstname(df)
+    arfn2 = []
+    arfn3 = []
+    for index, item in enumerate(arfn1):
+        if item <= 0:
+            continue
+        else:
+            a = index+1
+            arfn2.append(a)
+            b = item
+            arfn3.append(b)
+    return arfn2, arfn3
 
 # ~ file_name = do_dialog()
 # ~ df = pandas_read_csv(file_name)
@@ -423,7 +436,7 @@ def process_button():
     label_01['text'] = file_name
     fill_email_label(file_name)
     fill_telephone_label(file_name)
-    # ~ fill_firstname_label(file_name)
+    fill_firstname_label(file_name)
     # ~ get_result_lastname(file_name)
     # ~ get_result_secondname(file_name)
     # ~ get_result_address(file_name)
