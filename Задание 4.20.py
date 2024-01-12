@@ -288,6 +288,25 @@ def find_firstname_column(df):
         arfn.append(a)
     return arfn
 
+# Подсчет количества имен в найденных столбцах
+def count_firstname(df):
+    numbers = find_firstname_column(df)
+    arfn1 = []
+    b=0
+    for index, item in enumerate(numbers):
+        if item <= 0: 
+            b = 0
+        else:
+            lst = get_list_column(df, index)   # получи столбец из таблицы
+            mySeries = pd.Series(lst)          # сделай из этого столбца массив pandas Series индекс / значение
+            # ~ print(mySeries[421])           # проверка по файлу Contact.csv типа данных в ячейке со значением NaN
+            # ~ print(type(mySeries[421]))
+            data = mySeries.value_counts()     # сверни массив данных по уникальным значениям и посчитай их частотность
+            # ~ print(data)
+            b = sum(data)                      # суммируй количество данных. Если нужно вывести количество уникальных значений, можно написать len(data)
+        arfn1.append(b)
+    return arfn1
+
 
 
 # ~ file_name = do_dialog()
