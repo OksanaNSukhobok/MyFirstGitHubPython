@@ -272,6 +272,35 @@ def get_result_telephone(df):
 
 
 
+#FIRSTNAME
+# Поиск столбцов с именами по заданным шаблонам
+def find_firstname_column(df):
+    cnt_columns = df.shape[1]
+    arfn = []
+    for i in range(cnt_columns):
+        lst = get_list_column(df, i)
+        a = 0
+        for item in lst:
+            if isinstance(item, float) and np.isnan(item):
+                continue
+            elif re.findall(r'Александр\b|Анна\b|Михаил\b|Ольга\b', item):
+                a += 1
+        arfn.append(a)
+    return arfn
+
+
+
+# ~ file_name = do_dialog()
+# ~ df = pandas_read_csv(file_name)
+# ~ arfn = find_firstname_column(df)
+# ~ print(arfn)
+# ~ print(type(arfn))
+# ~ arfn1 = count_firstname(df)
+# ~ print(arfn1)
+# ~ result = get_result_firstname(df)
+# ~ print(result)
+# ~ print(type(result))
+
 
 
 
