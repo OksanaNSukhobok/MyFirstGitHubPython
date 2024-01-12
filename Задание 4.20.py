@@ -335,6 +335,98 @@ def get_result_firstname(df):
 
 
 
+#LASTNAME
+# Поиск столбцов с фамилиями по заданным шаблонам
+def find_lastname_column(df):
+    cnt_columns = df.shape[1]
+    arln = []
+    for i in range(cnt_columns):
+        lst = get_list_column(df, i)
+        a = 0
+        for item in lst:
+            if isinstance(item, float) and np.isnan(item):
+                continue
+            elif re.findall(r'ова\b', item):
+                a += 1
+        arln.append(a)
+    return arln
+
+
+
+file_name = do_dialog()
+df = pandas_read_csv(file_name)
+arln = find_lastname_column(df)
+print(arln)
+print(type(arln))
+# ~ arln1 = count_lastname(df)
+# ~ print(arln1)
+# ~ result = get_result_lastname(df)
+# ~ print(result)
+# ~ print(type(result))
+
+
+
+#SECONDNAME
+# Поиск столбцов с отчествами по заданным шаблонам
+def find_secondname_column(df):
+    cnt_columns = df.shape[1]
+    arsn = []
+    for i in range(cnt_columns):
+        lst = get_list_column(df, i)
+        a = 0
+        for item in lst:
+            if isinstance(item, float) and np.isnan(item):
+                continue
+            elif re.findall(r'Александр\b|Анна\b|Михаил\b|Ольга\b', item):
+                a += 1
+        arsn.append(a)
+    return arsn
+
+# Подсчет количества отчеств в найденных столбцах
+def count_secondname(df):
+    numbers = find_secondname_column(df)
+    arsn1 = []
+    b=0
+    for index, item in enumerate(numbers):
+        if item <= 0: 
+            b = 0
+        else:
+            lst = get_list_column(df, index)   # получи столбец из таблицы
+            mySeries = pd.Series(lst)          # сделай из этого столбца массив pandas Series индекс / значение
+            # ~ print(mySeries[421])           # проверка по файлу Contact.csv типа данных в ячейке со значением NaN
+            # ~ print(type(mySeries[421]))
+            data = mySeries.value_counts()     # сверни массив данных по уникальным значениям и посчитай их частотность
+            # ~ print(data)
+            b = sum(data)                      # суммируй количество данных. Если нужно вывести количество уникальных значений, можно написать len(data)
+        arsn1.append(b)
+    return arsn1
+
+# Определение результата по secondname
+def get_result_secondname(df):
+    arsn1 = count_secondname(df)
+    arsn2 = []
+    arsn3 = []
+    for index, item in enumerate(arsn1):
+        if item <= 0:
+            continue
+        else:
+            a = index+1
+            arsn2.append(a)
+            b = item
+            arsn3.append(b)
+    return arsn2, arsn3
+
+# ~ file_name = do_dialog()
+# ~ df = pandas_read_csv(file_name)
+# ~ arsn = find_secondname_column(df)
+# ~ print(arsn)
+# ~ print(type(arsn))
+# ~ arsn1 = count_firstname(df)
+# ~ print(arsn1)
+# ~ result = get_result_secondname(df)
+# ~ print(result)
+# ~ print(type(result))
+
 
 #RESULTS
 # Вывод результата по email
@@ -371,28 +463,26 @@ def fill_firstname_label(file_name):
         label_91['text'] = 'нет данных'
 
 # Вывод результата по lastname
-def get_result_lastname(file_name):
+def fill_lastname_label(file_name):
     df = pandas_read_csv(file_name)
-    try:
-        index, max_number = get_max_column(df)
-        label_111['text'] = index
-        label_121['text'] = max_number        
-    except:
+    arln2, arln3 = get_result_lastname(df)
+    if arln2 and arln3:
+        label_111['text'] = arln2
+        label_121['text'] = arln3        
+    else:
         label_111['text'] = 'нет данных'
         label_121['text'] = 'нет данных'
-    # ~ return df
 
 # Вывод результата по secondname
-def get_result_secondname(file_name):
+def fill_secondname_label(file_name):
     df = pandas_read_csv(file_name)
-    try:
-        index, max_number = get_max_column(df)
-        label_141['text'] = index
-        label_151['text'] = max_number        
-    except:
+    arsn2, arsn3 = get_result_secondname(df)
+    if arsn2 and arsn3:
+        label_141['text'] = arsn2
+        label_151['text'] = arsn3        
+    else:
         label_141['text'] = 'нет данных'
         label_151['text'] = 'нет данных'
-    # ~ return df
 
 # Вывод результата по address
 def get_result_address(file_name):
@@ -434,11 +524,11 @@ def get_result_gender(file_name):
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
-    fill_email_label(file_name)
-    fill_telephone_label(file_name)
-    fill_firstname_label(file_name)
-    # ~ get_result_lastname(file_name)
-    # ~ get_result_secondname(file_name)
+    # ~ fill_email_label(file_name)
+    # ~ fill_telephone_label(file_name)
+    # ~ fill_firstname_label(file_name)
+    # ~ fill_lastname_label(file_name)
+    # ~ fill_secondname_label(file_name)
     # ~ get_result_address(file_name)
     # ~ get_result_link(file_name)
     # ~ get_result_gender(file_name)
