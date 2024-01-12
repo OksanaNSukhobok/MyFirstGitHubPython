@@ -1,5 +1,4 @@
 # Программа анализа .csv файлов
-
 import tkinter as tk
 from tkinter import messagebox as mb
 from tkinter import filedialog as fd
@@ -9,6 +8,8 @@ import pandas as pd
 import chardet
 import re
 
+
+#DESIGN
 # Создание главного окна
 window = tk.Tk()
 window.geometry("900x690")
@@ -147,12 +148,22 @@ label_240.place(x=40, y=655)
 label_241 = tk.Label(window, text = "", font = ('Helvetica', 10, 'bold'), fg = '#000000')
 label_241.place(x=220, y=655)
 
+
+#COMMON
 # Диалог открытия файла
 def do_dialog():
     my_dir = os.getcwd()
     name=fd.askopenfilename(initialdir=my_dir)
     return name
-    
+
+# Выборка столбца в список
+def get_list_column(df, column_ix):
+    cnt_rows = df.shape[0]
+    lst = []
+    for i in range(cnt_rows):
+        lst.append(df.iat[i, column_ix])
+    return lst
+
 # Обработка csv файла при помощи pandas
 def pandas_read_csv(file_name):
     with open(file_name, 'rb') as f:
@@ -164,14 +175,9 @@ def pandas_read_csv(file_name):
         df = pd.read_csv(file_name, header=0, sep=';', encoding=encoding, dtype=str)
     return df
 
-# Выборка столбца в список
-def get_list_column(df, column_ix):
-    cnt_rows = df.shape[0]
-    lst = []
-    for i in range(cnt_rows):
-        lst.append(df.iat[i, column_ix])
-    return lst
 
+
+# EMAIL
 # Подсчет количества emails в столбце
 def count_email(df):
     cnt_columns = df.shape[1]
@@ -199,6 +205,9 @@ def get_max_column(df):
             index = numbers.index(max_number)+1
     return index, max_number
 
+
+
+#TELEPHONE
 # Поиск столбцов с номерами телефонов по заданным шаблонам
 def find_tel_number_column(df):
     cnt_columns = df.shape[1]
@@ -218,11 +227,6 @@ def find_tel_number_column(df):
         arr.append(a)
     return arr
 
-file_name = do_dialog()
-df = pandas_read_csv(file_name)
-arr = find_tel_number_column(df)
-print(arr)
-
 # Подсчет количества телефонов в найденных столбцах
 def count_tel_number(df):
     numbers = find_tel_number_column(df)
@@ -232,16 +236,13 @@ def count_tel_number(df):
         if item <= 1: 
             b = 0
         else:
-            lst = get_list_column(df, index)
-            mySeries = pd.Series(lst)
-            data = mySeries.value_counts()
-            b = len(data)
+            lst = get_list_column(df, index)   # получи столбец из таблицы
+            mySeries = pd.Series(lst)          # сделай из этого столбца массив pandas Series индекс / значение
+            data = mySeries.value_counts()     # сверни массив данных по уникальным значениям и посчитай их частотность
+            # ~ print(data)
+            b = sum(data)                      # суммируй количество данных. Если нужно вывести количество уникальных значений, можно написать len(data)
         arr1.append(b)
     return arr1
-
-arr1 = count_tel_number(df)
-print(arr1)
-print(type(arr1))
 
 # Определение результата по telephone
 def get_result_telephone(df):
@@ -258,12 +259,25 @@ def get_result_telephone(df):
             arr3.append(b)
     return arr2, arr3
 
-result = get_result_telephone(df)
-print(result)
-print(type(result))
+# ~ file_name = do_dialog()
+# ~ df = pandas_read_csv(file_name)
+# ~ arr = find_tel_number_column(df)
+# ~ print(arr)
+# ~ arr1 = count_tel_number(df)
+# ~ print(arr1)
+# ~ print(type(arr1))
+# ~ result = get_result_telephone(df)
+# ~ print(result)
+# ~ print(type(result))
 
+
+
+
+
+
+#RESULTS
 # Вывод результата по email
-def get_result_email(file_name):
+def fill_email_label(file_name):
     df = pandas_read_csv(file_name)
     try:
         index, max_number = get_max_column(df)
@@ -273,18 +287,100 @@ def get_result_email(file_name):
         label_21['text'] = 'нет данных'
         label_31['text'] = 'нет данных'
 
+# Вывод результата по telephone
+def fill_telephone_label(file_name):
+    df = pandas_read_csv(file_name)    
+    arr2, arr3 = get_result_telephone(df)
+    if arr2 and arr3:
+        label_51['text'] = arr2
+        label_61['text'] = arr3
+    else: 
+        label_51['text'] = 'нет данных'
+        label_61['text'] = 'нет данных'
+    
+# Вывод результата по firstname
+def fill_firstname_label(file_name):
+    df = pandas_read_csv(file_name)
+    arfn2, arfn3 = get_result_firstname(df)
+    if arfn2 and arfn3:
+        label_81['text'] = arfn2
+        label_91['text'] = arfn3        
+    else:
+        label_81['text'] = 'нет данных'
+        label_91['text'] = 'нет данных'
+
+# Вывод результата по lastname
+def get_result_lastname(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_111['text'] = index
+        label_121['text'] = max_number        
+    except:
+        label_111['text'] = 'нет данных'
+        label_121['text'] = 'нет данных'
+    # ~ return df
+
+# Вывод результата по secondname
+def get_result_secondname(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_141['text'] = index
+        label_151['text'] = max_number        
+    except:
+        label_141['text'] = 'нет данных'
+        label_151['text'] = 'нет данных'
+    # ~ return df
+
+# Вывод результата по address
+def get_result_address(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_171['text'] = index
+        label_181['text'] = max_number        
+    except:
+        label_171['text'] = 'нет данных'
+        label_181['text'] = 'нет данных'
+    # ~ return df
+
+# Вывод результата по link
+def get_result_link(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_201['text'] = index
+        label_211['text'] = max_number        
+    except:
+        label_201['text'] = 'нет данных'
+        label_211['text'] = 'нет данных'
+    # ~ return df
+
+# Вывод результата по gender
+def get_result_gender(file_name):
+    df = pandas_read_csv(file_name)
+    try:
+        index, max_number = get_max_column(df)
+        label_231['text'] = index
+        label_241['text'] = max_number        
+    except:
+        label_231['text'] = 'нет данных'
+        label_241['text'] = 'нет данных'
+    # ~ return df
+
 # Обработчик нажатия кнопки
 def process_button():
     file_name=do_dialog()
     label_01['text'] = file_name
-    get_result_email(file_name)
+    fill_email_label(file_name)
     fill_telephone_label(file_name)
-    #get_result_firstname(file_name)
-    #get_result_lastname(file_name)
-    #get_result_secondname(file_name)
-    #get_result_address(file_name)
-    #get_result_link(file_name)
-    #get_result_gender(file_name)
+    # ~ fill_firstname_label(file_name)
+    # ~ get_result_lastname(file_name)
+    # ~ get_result_secondname(file_name)
+    # ~ get_result_address(file_name)
+    # ~ get_result_link(file_name)
+    # ~ get_result_gender(file_name)
     mb.showinfo(title=file_name, message = "Готово")
 
 # Создание кнопки
@@ -293,3 +389,6 @@ button.grid(row=4, column=1)
 
 # Запуск цикла mainloop
 window.mainloop()
+
+
+
